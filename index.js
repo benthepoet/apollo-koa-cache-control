@@ -1,14 +1,17 @@
 const _ = require('underscore');
 
-module.exports = cacher;
+const getMinAge = _.compose(
+  _.min,
+  _.partial(_.map, _, _.property('maxAge')),
+  _.property(['extensions', 'cacheControl', 'hints'])
+);
+
+module.exports = {
+  cacher,
+  getMinAge
+};
 
 function cacher() {
-  const getMinAge = _.compose(
-    _.min,
-    _.partial(_.map, _, _.property('maxAge')),
-    _.property(['extensions', 'cacheControl', 'hints'])
-  );
-  
   return async (ctx, next) => {
     await next();
     
