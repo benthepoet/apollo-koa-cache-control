@@ -4,6 +4,7 @@
   "description": "A middleware for setting the upstream cache header with Apollo Server and Koa.js.",
   "main": "index.js",
   "scripts": {
+    "bench": "node benchmark/index.js",
     "test": "mocha"
   },
   "repository": {
@@ -17,10 +18,11 @@
   },
   "homepage": "https://github.com/benthepoet/apollo-koa-cache-control#readme",
   "dependencies": {
-    "ramda": "^0.25.0"
+    "underscore": "^1.9.0"
   },
   "devDependencies": {
     "assert": "^1.4.1",
+    "benchmark": "^2.1.4",
     "mocha": "^5.1.1"
   }
 }
