@@ -1,11 +1,3 @@
-const _ = require('underscore');
-
-const getMinAge = _.compose(
-  _.min,
-  _.partial(_.map, _, _.property('maxAge')),
-  _.property(['extensions', 'cacheControl', 'hints'])
-);
-
 module.exports = {
   cacher,
   getMinAge
@@ -22,6 +14,23 @@ function cacher() {
   };
 }
 
+function getMinAge({ extensions }) {
+  const hintsUndefined = !extensions || !extensions.cacheControl || !extensions.cacheControl.hints;
+  const hints = hintsUndefined ? [] : extensions.cacheControl.hints;
+  
+  let resolving = hints.length;
+  let minAge = null;
+  
+  while (resolving--) {
+    const { maxAge } = hints[resolving];
+    if (minAge === null || maxAge < minAge) {
+      minAge = maxAge;
+    }
+  }
+  
+  return minAge;
+}
+
 function isNil(value) {
-  return _.isUndefined(value) || _.isNull();
+  return value === undefined || value === null;
 }

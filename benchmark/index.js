@@ -1,6 +1,7 @@
 const Benchmark = require('benchmark');
 const _ = require('underscore');
 
+const { getMinAge } = require('../');
 const suite = new Benchmark.Suite();
 
 const body = {
@@ -10,12 +11,6 @@ const body = {
     }
   }
 };
-
-const getMinAge = _.compose(
-  _.min,
-  _.partial(_.map, _, _.property('maxAge')),
-  _.property(['extensions', 'cacheControl', 'hints'])
-);
 
 suite
   .add('underscore', function () {
