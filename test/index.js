@@ -28,7 +28,7 @@ describe('Cache Control', () => {
       };
       
       cacher()(context, sinon.spy());
-      assert(context.set, '\'Cache-Control\' header was set.');
+      assert(!context.set.called, '\'Cache-Control\' header was set.');
     });
   });
 
