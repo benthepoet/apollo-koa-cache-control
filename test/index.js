@@ -17,6 +17,15 @@ describe('Cache Control', () => {
     [50, 100]
   ];
   
+  describe('missing extensions', () => {
+    describe('getMinAge', () => {
+      it('should return null', () => {
+        const minAge = getMinAge({});
+        assert(minAge === null, '\'minAge\' was not null.');
+      });
+    });
+  });
+  
   ranges.forEach(([start, end]) => {
     describe(`range ${start} - ${end}`, () => {
       const body = {
