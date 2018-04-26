@@ -12,30 +12,39 @@ describe('Cache Control', () => {
     _.range
   );
   
-  const body = {
-    extensions: {
-      cacheControl: {
-        hints: generateHints(50)
-      }
-    }
-  };
+  const ranges = [
+    [0, 50],
+    [50, 100]
+  ];
   
-  describe('cacher', () => {
-    it('should not set the cache control header', () => {
-      const context = {
-        body,
-        set: sinon.spy()
+  ranges.forEach(([start, end]) => {
+    describe(`range ${start} - ${end}`, () => {
+      const body = {
+        extensions: {
+          cacheControl: {
+            hints: generateHints(start, end)
+          }
+        }
       };
       
-      cacher()(context, sinon.spy());
-      assert(!context.set.called, '\'Cache-Control\' header was set.');
-    });
-  });
-
-  describe('getMinAge', () => {
-    it('should return lowest age', () => {
-      const minAge = getMinAge(body);
-      assert.equal(minAge, 0, '\'minAge\' was not 0.');
+      describe('cacher', () => {
+        it(`should ${start ? 'set': 'not set'} the cache control header`, async () => {
+          const context = {
+            body,
+            set: sinon.spy()
+          };
+          
+          await cacher()(context, sinon.spy());
+          assert(start ? context.set.called : !context.set.called, `'Cache-Control' header ${context.set.called ? 'was' : 'was not'} set.`);
+        });
+      });
+    
+      describe('getMinAge', () => {
+        it('should return lowest age', () => {
+          const minAge = getMinAge(body);
+          assert.equal(minAge, start, `'minAge' was not ${start}.`);
+        });
+      });
     });
   });
 
