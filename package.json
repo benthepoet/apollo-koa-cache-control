@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/benthepoet/apollo-koa-cache-control#readme",
   "devDependencies": {
-    "assert": "^1.4.1",
     "benchmark": "^2.1.4",
     "coveralls": "^3.0.0",
     "mocha": "^5.1.1",
