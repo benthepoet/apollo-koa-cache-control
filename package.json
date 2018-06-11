@@ -4,7 +4,7 @@
   "description": "A middleware for setting the upstream cache header with Apollo Server and Koa.js.",
   "main": "index.js",
   "directories": {
-    "test": "tests"
+    "test": "./test"
   },
   "scripts": {
     "bench": "node benchmark/index.js",
